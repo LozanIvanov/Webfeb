@@ -11,14 +11,14 @@ namespace Webfeb.Controllers.Admin
     public class CategoryController : Controller
     {
         private CategoryService service;
-        public CategoryController()
+        public CategoryController(CategoryService service)
         {
-            service = new CategoryService();    
+            this.service = service;
         }
         [Route("/Admin/Categories")]
         public IActionResult Index()
         {
-            List<Category> categories = service.GetCategory();
+            List<Category> categories = service.GetCategories();
             return View("~/Views/Admin/Categories/Index.cshtml",categories);
         }
 
@@ -26,7 +26,7 @@ namespace Webfeb.Controllers.Admin
         [Route("/Admin/Categories/Create")]
         public IActionResult Create()
         {
-           List<Category> categories = service.GetCategory();
+           List<Category> categories = service.GetCategories();
             return View("~/Views/Admin/Categories/Create.cshtml",categories);
         }
         [HttpPost]
@@ -41,7 +41,7 @@ namespace Webfeb.Controllers.Admin
         public IActionResult Edit(int id)
         {
             CategoryEditViewModel model = new CategoryEditViewModel();
-            model.Categories=service.GetCategory();
+            model.Categories=service.GetCategories();
             model.SelectedCategory = service.GetCategoryById(id);
             return View("~/Views/Admin/Categories/Edit.cshtml", model);
         }

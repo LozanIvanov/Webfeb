@@ -1,0 +1,38 @@
+﻿@model List<WEB.Database.Models.Category>;
+@{
+    Layout = "~/Views/ShareAdmin/_AdminLayout.cshtml";
+}
+
+<form method="POST">
+    <div class="row">
+        <div class="col-sm-4">
+            <div>
+                Name:  <input type="text" name="Name" class="form-control" />
+            </div>
+            <div>
+                Description:  <input type="text" name="Discription" class="form-control" />
+            </div>
+            <div>
+                Quantity:  <input type="number" name="Quantity" class="form-control" />
+            </div>
+            <div>
+                Price:  <input type="number" name="Price" class="form-control" />
+            </div>
+            <div>
+                Image:  <input type="file" accept="image/*" name="MainImage" class="form-control" />
+            </div>
+            <div>
+                Category: 
+                <select name="CategoryId" class="form-control">
+                    @foreach (var category in Model)
+                    {
+                        <option value="@category.Id">@category.Name</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <button class="btn btn-info">Save</button>
+        </div>
+    </div>
+</form>

@@ -2,6 +2,7 @@ using WEB.Database;
 using Microsoft.EntityFrameworkCore;
 using WEB.Database.Models;
 using Microsoft.AspNetCore.Identity;
+using WEB.Dal.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +28,9 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LoginPath = "/login";
     options.AccessDeniedPath = "/404";
 });
+
+builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<CategoryService>();
 
 var app = builder.Build();
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,36 +12,36 @@ namespace WEB.Dal.Services
 {
     public class CategoryService
     {
-        private ApplicationDbContext dbcontext;
-        public CategoryService()
+        private ApplicationDbContext dbContext;
+        public CategoryService(IConfiguration configuration)
         {
             DbContextOptionsBuilder builder = new DbContextOptionsBuilder();
-            builder.UseSqlServer("Server=.;Database=Feb;Trusted_Connection=true");
-            dbcontext= new ApplicationDbContext(builder.Options);
+            builder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+            dbContext = new ApplicationDbContext(builder.Options);
         }
         public void Store(Category category)
         {
-            dbcontext.Categories.Add(category);
-            dbcontext.SaveChanges();    
+            dbContext.Categories.Add(category);
+            dbContext.SaveChanges();
         }
-        public List<Category>GetCategory()
+        public List<Category> GetCategories()
         {
-            return dbcontext.Categories.ToList();
+            return dbContext.Categories.ToList();
         }
         public Category GetCategoryById(int id)
         {
-            return dbcontext.Categories.Where(c => c.Id == id).FirstOrDefault();
+            return dbContext.Categories.Where(c => c.Id == id).FirstOrDefault();
         }
         public void Update(Category category)
         {
-            dbcontext.Entry(category).State = EntityState.Modified;
-            dbcontext.SaveChanges();
+            dbContext.Entry(category).State = EntityState.Modified;
+            dbContext.SaveChanges();
         }
         public void Delete(int id)
         {
             Category cat = GetCategoryById(id);
-            dbcontext.Entry(cat).State = EntityState.Deleted;
-            dbcontext.SaveChanges();
+            dbContext.Entry(cat).State = EntityState.Deleted;
+            dbContext.SaveChanges();
         }
     }
 }

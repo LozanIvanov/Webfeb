@@ -1,0 +1,67 @@
+﻿@model List<WEB.Database.Models.Product>
+@{
+    Layout = "~/Views/ShareAdmin/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <a href="/Admin/Products/Create" class="btn btn-info">Add new product</a>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <td>
+                        Name
+                    </td>
+                    <td>
+                        Description
+                    </td>
+                    <td>
+                        Quantity
+                    </td>
+                    <td>
+                        Price
+                    </td>
+                    <td>
+                        Image
+                    </td>
+                    <td>
+                        Category
+                    </td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>
+                        @product.Name
+                    </td>
+                    <td>
+                        @product.Discription
+                    </td>
+                    <td>
+                        @product.Quantity
+                    </td>
+                    <td>
+                        @product.Price
+                    </td>
+                    <td>
+                        @if (product.MainImage != null)
+                            {
+                                <img src="@product.MainImage" />
+                            }
+                    </td>
+                    <td>
+                        @product.Category.Name
+                    </td>
+                    <td>
+                        <a href="/Admin/Products/Edit/@product.Id" class="btn btn-info">Edit</a>
+                        <a href="/Admin/Products/Delete/@product.Id" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+                }
+                </tbody>
+        </table>
+    </div>
+</div>
