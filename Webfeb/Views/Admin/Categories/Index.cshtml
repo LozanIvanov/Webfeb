@@ -1,0 +1,47 @@
+﻿
+@model List<WEB.Database.Models.Category>
+@{
+    Layout = "~/Views/ShareAdmin/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <a href="/Admin/Categories/Create" class="btn btn-info">Add new category</a>
+        <table class="table table-bordered">
+            <tr>
+                <td>
+                    Id
+                </td>
+                <td>
+                    Name
+                </td>
+                <td>
+                    Parent
+                </td>
+                <td>
+                    Actions
+                </td>
+            </tr>
+            @foreach (var category in Model)
+            {
+                <tr>
+                    <td>
+                        @category.Id
+                    </td>
+                    <td>
+                        @category.Name
+                    </td>
+                    <td>
+                        @(category.Parent != null  ? category.Parent.Name : "Main")
+                    </td>
+                    <td>
+                        <a href="/Admin/Categories/Edit/@category.Id" class="btn btn-info">Edit</a>
+                        <a href="/Admin/Categories/Delete/@category.Id" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+
