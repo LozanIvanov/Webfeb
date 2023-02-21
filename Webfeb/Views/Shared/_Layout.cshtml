@@ -150,7 +150,13 @@
                         }
                         else
                         {
-                            <div class="navbar-nav ml-auto py-0">
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <div class="navbar-nav ml-auto py-0">
+                                    <a href="/Admin/Dashboard" class="nav-item nav-link">Admin Panel</a>
+                                </div>
+                            }
+                            <div class="navbar-nav py-0">
                                Hello,@User.Identity.Name <br/>
                                <a href="/logout">Logout</a>
                             

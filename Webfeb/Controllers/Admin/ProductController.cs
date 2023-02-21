@@ -1,7 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Net.Http.Headers;
 using WEB.Dal.Services;
 using WEB.Database.Models;
+using Webfeb.Models.Admin;
 
 namespace Webfeb.Controllers.Admin
 {
@@ -10,10 +14,12 @@ namespace Webfeb.Controllers.Admin
 	{
 		private readonly ProductService productService;
 		private readonly CategoryService categoryService;
-		public ProductController(ProductService productService, CategoryService categoryService)
+        private readonly IWebHostEnvironment environment;
+		public ProductController(ProductService productService, CategoryService categoryService, IWebHostEnvironment environment)
 		{
 			this.productService = productService;
 			this.categoryService = categoryService;
+			this.environment = environment;
 		}
 
 		[Route("Admin/Products")]
@@ -35,11 +41,36 @@ namespace Webfeb.Controllers.Admin
 
         [Route("Admin/Products/Create")]
         [HttpPost]
-        public IActionResult Create(Product product)
+        public async Task<IActionResult> Create(ProductCreateModel productModel)
         {
+            string filePath = await UploadFile(productModel.MainImage);
+
+            Product product = new Product
+            { 
+                Name = productModel.Name,
+                Discription = productModel.Discription,
+                Quantity = productModel.Quantity,
+                Price = productModel.Price,
+                MainImage = filePath,
+                CategoryId = productModel.CategoryId
+            };
+
             this.productService.AddProduct(product);
 
             return Redirect("/Admin/Products");
+        }
+
+        private async Task<string> UploadFile(IFormFile file)
+        {
+            var uniqueFileName = Guid.NewGuid() + "-" + file.FileName;
+            var filePath = Path.Combine("wwwroot", "img", "products", uniqueFileName);
+
+            using (var stream = System.IO.File.Create(filePath))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            return uniqueFileName;
         }
     }
 }
