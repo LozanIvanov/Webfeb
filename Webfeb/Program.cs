@@ -42,6 +42,24 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    try
+    {
+        var userManager = services.GetRequiredService<UserManager<User>>();
+        var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+        var dbContext = services.GetRequiredService<ApplicationDbContext>();
+
+        DBInitializer.Initialize(userManager, roleManager, dbContext);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.Message);
+    }
+}
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 

@@ -156,6 +156,12 @@
                                     <a href="/Admin/Dashboard" class="nav-item nav-link">Admin Panel</a>
                                 </div>
                             }
+                            @if (User.IsInRole("Manager"))
+                            {
+                                <div class="navbar-nav ml-auto py-0">
+                                    <a href="/Admin/Products" class="nav-item nav-link">Admin Panel</a>
+                                </div>
+                            }
                             <div class="navbar-nav py-0">
                                Hello,@User.Identity.Name <br/>
                                <a href="/logout">Logout</a>

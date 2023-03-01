@@ -22,10 +22,41 @@ namespace WEB.Dal.Services
                 .ToList();
         }
 
+        public Product GetProductById(int id)
+        {
+            return this.dbContext.Products.Where(p => p.Id == id)
+                .Include(p => p.Category)
+                .FirstOrDefault();
+        }
+
         public void AddProduct(Product product)
         {
             this.dbContext.Products.Add(product);
             this.dbContext.SaveChanges();
+        }
+
+        public void UpdateProduct(int id, Product product)
+        {
+            var currentProduct = this.dbContext.Products.Where(p => p.Id == id)
+                .Include(p => p.Category)
+                .FirstOrDefault();
+
+            if (currentProduct != null)
+            {
+                currentProduct.Name = product.Name;
+                currentProduct.Discription = product.Discription;
+                currentProduct.Price = product.Price;
+                currentProduct.Quantity = product.Quantity;
+                currentProduct.CategoryId = product.CategoryId;
+
+                if (!string.IsNullOrEmpty(product.MainImage))
+                {
+                    currentProduct.MainImage = product.MainImage;
+                }
+
+                dbContext.Entry(currentProduct).State = EntityState.Modified;
+                dbContext.SaveChanges();
+            }
         }
 	}
 }

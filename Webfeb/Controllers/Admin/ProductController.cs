@@ -9,25 +9,25 @@ using Webfeb.Models.Admin;
 
 namespace Webfeb.Controllers.Admin
 {
-	[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Manager")]
     public class ProductController : Controller
-	{
-		private readonly ProductService productService;
-		private readonly CategoryService categoryService;
+    {
+        private readonly ProductService productService;
+        private readonly CategoryService categoryService;
         private readonly IWebHostEnvironment environment;
-		public ProductController(ProductService productService, CategoryService categoryService, IWebHostEnvironment environment)
-		{
-			this.productService = productService;
-			this.categoryService = categoryService;
-			this.environment = environment;
-		}
+        public ProductController(ProductService productService, CategoryService categoryService, IWebHostEnvironment environment)
+        {
+            this.productService = productService;
+            this.categoryService = categoryService;
+            this.environment = environment;
+        }
 
-		[Route("Admin/Products")]
-		public IActionResult Index()
-		{
-			var products = this.productService.GetProducts();
+        [Route("Admin/Products")]
+        public IActionResult Index()
+        {
+            var products = this.productService.GetProducts();
 
-			return View("~/Views/Admin/Products/Index.cshtml", products);
+            return View("~/Views/Admin/Products/Index.cshtml", products);
         }
 
         [Route("Admin/Products/Create")]
@@ -43,10 +43,14 @@ namespace Webfeb.Controllers.Admin
         [HttpPost]
         public async Task<IActionResult> Create(ProductCreateModel productModel)
         {
-            string filePath = await UploadFile(productModel.MainImage);
+            string filePath = "no-image.png";
+            if (productModel.MainImage != null)
+            {
+                filePath = await UploadFile(productModel.MainImage);
+            }
 
             Product product = new Product
-            { 
+            {
                 Name = productModel.Name,
                 Discription = productModel.Discription,
                 Quantity = productModel.Quantity,
@@ -56,6 +60,47 @@ namespace Webfeb.Controllers.Admin
             };
 
             this.productService.AddProduct(product);
+
+            return Redirect("/Admin/Products");
+        }
+
+        [Route("Admin/Products/Edit/{id}")]
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var product = this.productService.GetProductById(id);
+            var categories = this.categoryService.GetCategories();
+
+            ProductEditViewModel model = new ProductEditViewModel
+            {
+                Product = product,
+                Categories = categories
+            };
+
+            return View("~/Views/Admin/Products/Edit.cshtml", model);
+        }
+
+        [Route("Admin/Products/Edit/{id}")]
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, ProductCreateModel productModel)
+        {
+            string filePath = String.Empty;
+            if (productModel.MainImage != null)
+            {
+                filePath = await UploadFile(productModel.MainImage);
+            }
+
+            Product product = new Product
+            {
+                Name = productModel.Name,
+                Discription = productModel.Discription,
+                Quantity = productModel.Quantity,
+                Price = productModel.Price,
+                MainImage = filePath,
+                CategoryId = productModel.CategoryId
+            };
+
+            this.productService.UpdateProduct(id, product);
 
             return Redirect("/Admin/Products");
         }

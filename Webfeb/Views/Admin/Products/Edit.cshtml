@@ -1,0 +1,45 @@
+﻿@model Webfeb.Models.Admin.ProductEditViewModel;
+@{
+    Layout = "~/Views/ShareAdmin/_AdminLayout.cshtml";
+}
+
+<form method="POST" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-sm-4">
+            <div>
+                Name:  <input type="text" name="Name" class="form-control" value="@Model.Product.Name" />
+            </div>
+            <div>
+                Description:  <input type="text" name="Discription" class="form-control" value="@Model.Product.Discription" />
+            </div>
+            <div>
+                Quantity:  <input type="number" name="Quantity" class="form-control" value="@Model.Product.Quantity" />
+            </div>
+            <div>
+                Price:  <input type="number" name="Price" class="form-control" value="@Model.Product.Price" />
+            </div>
+            <div>
+                Image:  <input type="file" accept="image/*" name="MainImage" class="form-control" />
+            </div>
+            <div>
+                Category: 
+                <select name="CategoryId" class="form-control">
+                    @foreach (var category in Model.Categories)
+                    {
+                        if (category.Id == Model.Product.CategoryId)
+                        {
+                            <option selected value="@category.Id">@category.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@category.Id">@category.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <button class="btn btn-info">Update</button>
+        </div>
+    </div>
+</form>
