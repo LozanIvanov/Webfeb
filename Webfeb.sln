@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webfeb", "Webfeb\Webfeb.csproj", "{E2CCCBE4-F88F-4643-B6E6-B2CE3C0467D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webfeb", "Webfeb\Webfeb.csproj", "{E2CCCBE4-F88F-4643-B6E6-B2CE3C0467D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WEB.Database", "WEB.Database\WEB.Database.csproj", "{E228F90E-44E6-4395-A129-8BD2CFAABE4A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WEB.Database", "WEB.Database\WEB.Database.csproj", "{E228F90E-44E6-4395-A129-8BD2CFAABE4A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WEB.Dal", "WEB.Dal\WEB.Dal.csproj", "{1AE0336F-5ABF-4784-9718-27C012EEF77F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WEB.Dal", "WEB.Dal\WEB.Dal.csproj", "{1AE0336F-5ABF-4784-9718-27C012EEF77F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
