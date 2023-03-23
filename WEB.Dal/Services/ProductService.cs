@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System.Globalization;
 using WEB.Database;
 using WEB.Database.Models;
 
@@ -15,11 +16,17 @@ namespace WEB.Dal.Services
             dbContext = new ApplicationDbContext(builder.Options);
         }
 
-        public List<Product> GetProducts()
+        public List<Product> GetProducts(decimal minPrice = 0, decimal maxPrice = 0)
         {
-            return this.dbContext.Products
-                .Include(p => p.Category)
-                .ToList();
+            var query = this.dbContext.Products.AsQueryable();
+
+            if (maxPrice > 0)
+                query = query.Where(p => p.Price <= maxPrice);
+
+            if (minPrice > 0)
+                query = query.Where(p => p.Price >= minPrice);
+
+            return query.Include(p => p.Category).ToList();
         }
 
         public Product GetProductById(int id)

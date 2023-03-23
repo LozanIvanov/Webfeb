@@ -1,0 +1,29 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using WEB.Dal.Services;
+
+namespace Webfeb.Controllers
+{
+	public class ShopController : Controller
+	{
+		private readonly ProductService service;
+		public ShopController(ProductService service)
+		{
+			this.service = service;
+		}
+
+        [Route("/Shop/Details/{id}")]
+        public IActionResult Details(int id)
+		{
+			var product = this.service.GetProductById(id);
+
+			return View(product);
+		}
+
+		public IActionResult Index(decimal minPrice = 0, decimal maxPrice = 0)
+		{
+			var products = this.service.GetProducts(minPrice, maxPrice);
+
+			return View(products);
+		}
+	}
+}
