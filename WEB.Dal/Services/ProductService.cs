@@ -6,15 +6,9 @@ using WEB.Database.Models;
 
 namespace WEB.Dal.Services
 {
-    public class ProductService
-	{
-        private readonly ApplicationDbContext dbContext;
-        public ProductService(IConfiguration configuration)
-		{
-            DbContextOptionsBuilder builder = new DbContextOptionsBuilder();
-            builder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
-            dbContext = new ApplicationDbContext(builder.Options);
-        }
+    public class ProductService : BaseService
+    {
+        public ProductService(IConfiguration configuration) : base(configuration) { }
 
         public List<Product> GetProducts(decimal minPrice = 0, decimal maxPrice = 0)
         {
@@ -26,7 +20,11 @@ namespace WEB.Dal.Services
             if (minPrice > 0)
                 query = query.Where(p => p.Price >= minPrice);
 
-            return query.Include(p => p.Category).ToList();
+            return query
+                .Include(p => p.Category)
+                .Include(p => p.Size)
+                .Include(p => p.Color)
+                .ToList();
         }
 
         public Product GetProductById(int id)
@@ -55,6 +53,8 @@ namespace WEB.Dal.Services
                 currentProduct.Price = product.Price;
                 currentProduct.Quantity = product.Quantity;
                 currentProduct.CategoryId = product.CategoryId;
+                currentProduct.ColorId = product.ColorId;
+                currentProduct.SizeId = product.SizeId;
 
                 if (!string.IsNullOrEmpty(product.MainImage))
                 {
@@ -65,5 +65,5 @@ namespace WEB.Dal.Services
                 dbContext.SaveChanges();
             }
         }
-	}
+    }
 }

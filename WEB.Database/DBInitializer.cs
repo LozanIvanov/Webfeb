@@ -61,6 +61,22 @@ namespace WEB.Database
                 dbContext.Products.Add(new Product() { Name = "Puma Jacket", CategoryId = 3, Discription = "Brand new model", Price = 190, Quantity = 18, MainImage = "product-6.jpg" });
                 dbContext.SaveChanges();
                 #endregion
+
+                #region Create Colors
+                dbContext.Colors.Add(new Color() { Name = "Blue" });
+                dbContext.Colors.Add(new Color() { Name = "Green" });
+                dbContext.Colors.Add(new Color() { Name = "Black" });
+                dbContext.SaveChanges();
+                #endregion
+
+                #region Create Sizes
+                dbContext.Sizes.Add(new Size() { Name = "XS" });
+                dbContext.Sizes.Add(new Size() { Name = "S" });
+                dbContext.Sizes.Add(new Size() { Name = "M" });
+                dbContext.Sizes.Add(new Size() { Name = "L" });
+                dbContext.Sizes.Add(new Size() { Name = "XL" });
+                dbContext.SaveChanges();
+                #endregion
             }
         }
     }

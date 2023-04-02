@@ -31,6 +31,8 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<CategoryService>();
+builder.Services.AddScoped<SizeService>();
+builder.Services.AddScoped<ColorService>();
 
 var app = builder.Build();
 

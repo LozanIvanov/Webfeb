@@ -20,6 +20,8 @@ namespace WEB.Database
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Publication> Publications { get; set; }
+        public DbSet<Color> Colors { get; set; }
+        public DbSet<Size> Sizes { get; set; }
         public ApplicationDbContext(DbContextOptions options)
             :base(options)
         {

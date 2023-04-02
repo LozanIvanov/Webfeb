@@ -27,6 +27,12 @@
                     <td>
                         Category
                     </td>
+                    <td>
+                        Size
+                    </td>
+                    <td>
+                        Color
+                    </td>
                     <td></td>
                 </tr>
             </thead>
@@ -54,6 +60,12 @@
                     </td>
                     <td>
                         @product.Category.Name
+                    </td>
+                    <td>
+                        @product.Size.Name
+                    </td>
+                    <td>
+                        @product.Color.Name
                     </td>
                     <td>
                         <a href="/Admin/Products/Edit/@product.Id" class="btn btn-info">Edit</a>

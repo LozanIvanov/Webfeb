@@ -15,6 +15,7 @@ namespace Webfeb.Models.Admin
         public IFormFile? MainImage { get; set; }
         public string? GalleryImage { get; set; }
         public int CategoryId { get; set; }
-        public Category Category { get; set; }
+        public int ColorId { get; set; }
+        public int SizeId { get; set; }
     }
 }

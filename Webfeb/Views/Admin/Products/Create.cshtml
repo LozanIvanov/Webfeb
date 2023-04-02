@@ -1,4 +1,4 @@
-﻿@model List<WEB.Database.Models.Category>;
+﻿@model Webfeb.Models.Admin.ProductCreateViewModel;
 @{
     Layout = "~/Views/ShareAdmin/_AdminLayout.cshtml";
 }
@@ -24,9 +24,27 @@
             <div>
                 Category: 
                 <select name="CategoryId" class="form-control">
-                    @foreach (var category in Model)
+                    @foreach (var category in Model.Categories)
                     {
                         <option value="@category.Id">@category.Name</option>
+                    }
+                </select>
+            </div>
+            <div>
+                Sizes: 
+                <select name="SizeId" class="form-control">
+                    @foreach (var size in Model.Sizes)
+                    {
+                        <option value="@size.Id">@size.Name</option>
+                    }
+                </select>
+            </div>
+            <div>
+                Colors: 
+                <select name="ColorId" class="form-control">
+                    @foreach (var color in Model.Colors)
+                    {
+                        <option value="@color.Id">@color.Name</option>
                     }
                 </select>
             </div>

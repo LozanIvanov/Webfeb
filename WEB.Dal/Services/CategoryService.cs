@@ -1,24 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WEB.Database;
 using WEB.Database.Models;
 
 namespace WEB.Dal.Services
 {
-    public class CategoryService
+    public class CategoryService : BaseService
     {
-        private ApplicationDbContext dbContext;
-        public CategoryService(IConfiguration configuration)
-        {
-            DbContextOptionsBuilder builder = new DbContextOptionsBuilder();
-            builder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
-            dbContext = new ApplicationDbContext(builder.Options);
-        }
+        public CategoryService(IConfiguration configuration) : base(configuration) { }
+
         public void Store(Category category)
         {
             dbContext.Categories.Add(category);

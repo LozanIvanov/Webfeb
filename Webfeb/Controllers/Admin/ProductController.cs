@@ -14,11 +14,15 @@ namespace Webfeb.Controllers.Admin
     {
         private readonly ProductService productService;
         private readonly CategoryService categoryService;
+        private readonly ColorService colorService;
+        private readonly SizeService sizeService;
         private readonly IWebHostEnvironment environment;
-        public ProductController(ProductService productService, CategoryService categoryService, IWebHostEnvironment environment)
+        public ProductController(ProductService productService, CategoryService categoryService, ColorService colorService, SizeService sizeService, IWebHostEnvironment environment)
         {
             this.productService = productService;
             this.categoryService = categoryService;
+            this.sizeService = sizeService;
+            this.colorService = colorService;
             this.environment = environment;
         }
 
@@ -35,8 +39,10 @@ namespace Webfeb.Controllers.Admin
         public IActionResult Create()
         {
             var categories = this.categoryService.GetCategories();
+            var colors = this.colorService.GetColors();
+            var sizes = this.sizeService.GetSizes();
 
-            return View("~/Views/Admin/Products/Create.cshtml", categories);
+            return View("~/Views/Admin/Products/Create.cshtml", new ProductCreateViewModel { Categories = categories, Colors = colors, Sizes = sizes });
         }
 
         [Route("Admin/Products/Create")]
@@ -56,7 +62,9 @@ namespace Webfeb.Controllers.Admin
                 Quantity = productModel.Quantity,
                 Price = productModel.Price,
                 MainImage = filePath,
-                CategoryId = productModel.CategoryId
+                CategoryId = productModel.CategoryId,
+                ColorId = productModel.ColorId,
+                SizeId = productModel.SizeId
             };
 
             this.productService.AddProduct(product);
@@ -70,11 +78,15 @@ namespace Webfeb.Controllers.Admin
         {
             var product = this.productService.GetProductById(id);
             var categories = this.categoryService.GetCategories();
+            var colors = this.colorService.GetColors();
+            var sizes = this.sizeService.GetSizes();
 
             ProductEditViewModel model = new ProductEditViewModel
             {
                 Product = product,
-                Categories = categories
+                Categories = categories,
+                Colors = colors,
+                Sizes = sizes
             };
 
             return View("~/Views/Admin/Products/Edit.cshtml", model);
@@ -97,7 +109,9 @@ namespace Webfeb.Controllers.Admin
                 Quantity = productModel.Quantity,
                 Price = productModel.Price,
                 MainImage = filePath,
-                CategoryId = productModel.CategoryId
+                CategoryId = productModel.CategoryId,
+                ColorId = productModel.ColorId,
+                SizeId = productModel.SizeId
             };
 
             this.productService.UpdateProduct(id, product);
