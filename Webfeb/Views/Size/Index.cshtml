@@ -1,0 +1,33 @@
+﻿@model List<WEB.Database.Models.Size>;
+@{
+    ViewData["Title"] = "Products Page";
+}
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+         <a href="/Size/Create" class="btn btn-outline-info">Add Size</a>
+        <table class="table table-bordered">
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+           @foreach (var size in Model)
+           {
+               <tr>
+                   <td>@size.Id</td>
+                   <td>@size.Name</td>
+                   <td>
+                        <a href="/Size/Edit/@size.Id" class="btn btn-info">Edit</a>
+                         <a href="/Size/Delete/@size.Id" class="btn btn-info">Delete</a>
+                   </td>
+               </tr>
+           }
+        </table>
+    </div>
+</div>

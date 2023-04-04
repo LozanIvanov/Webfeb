@@ -1,0 +1,25 @@
+﻿@model Webfeb.Models.Shop.EditViewSize;
+@{
+    ViewData["Title"] = "Products Page";
+}
+<form method="post">
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-4">
+            <div>
+                <labal>Name</labal>
+               @if(!string.IsNullOrEmpty( Model.Name))
+                {
+                <input type="text" name="Name"class="form-control" value="@Model.Name" />
+                }
+                else
+                {
+                    <input type="text" name="Name"class="form-control" />
+                }
+            </div>
+            <div>
+                <button class="btn btn-info">Save</button>
+            </div>
+        </div>
+
+    </div>
+</form>
