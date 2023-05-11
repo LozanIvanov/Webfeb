@@ -6,5 +6,6 @@ namespace Webfeb.Models.Admin
     {
         public List<Category> Categories { get; set; }
         public Category SelectedCategory { get; set; }
+        public Category CategoryView { get; set; }
     }
 }

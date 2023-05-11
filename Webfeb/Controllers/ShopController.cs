@@ -16,14 +16,14 @@ namespace Webfeb.Controllers
 		{
 			var product = this.service.GetProductById(id);
 
-			return View(product);
+			return View("~/Views/Shop/Details.cshtml",product);
 		}
 
 		public IActionResult Index(decimal minPrice = 0, decimal maxPrice = 0)
 		{
 			var products = this.service.GetProducts(minPrice, maxPrice);
 
-			return View(products);
+			return View("~/Views/Shop/index.cshtml", products);
 		}
 	}
 }

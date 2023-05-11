@@ -12,8 +12,8 @@ using WEB.Database;
 namespace WEB.Database.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230402173545_AddColorAndSizeToProduct")]
-    partial class AddColorAndSizeToProduct
+    [Migration("20230510082219_IFormFile")]
+    partial class IFormFile
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -240,6 +240,9 @@ namespace WEB.Database.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("MainImage")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -446,6 +449,10 @@ namespace WEB.Database.Migrations
 
                     b.HasIndex("CategoryId");
 
+                    b.HasIndex("ColorId");
+
+                    b.HasIndex("SizeId");
+
                     b.ToTable("Products");
                 });
 
@@ -630,7 +637,23 @@ namespace WEB.Database.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("WEB.Database.Models.Color", "Color")
+                        .WithMany()
+                        .HasForeignKey("ColorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WEB.Database.Models.Size", "Size")
+                        .WithMany()
+                        .HasForeignKey("SizeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Category");
+
+                    b.Navigation("Color");
+
+                    b.Navigation("Size");
                 });
 
             modelBuilder.Entity("WEB.Database.Models.Publication", b =>

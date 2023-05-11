@@ -14,7 +14,8 @@ namespace WEB.Database.Models
         public Category Parent { get; set; }
         [ForeignKey("Parent")]
         public int? ParentId { get; set; }
-        
+        public string? MainImage { get; set; }
+
         public ICollection<Product> Products { get; set; }
         public Category()
         {

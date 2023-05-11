@@ -13,7 +13,7 @@ namespace WEB.Dal.Services
         public List<Product> GetProducts(decimal minPrice = 0, decimal maxPrice = 0)
         {
             var query = this.dbContext.Products.AsQueryable();
-
+            
             if (maxPrice > 0)
                 query = query.Where(p => p.Price <= maxPrice);
 
@@ -21,7 +21,7 @@ namespace WEB.Dal.Services
                 query = query.Where(p => p.Price >= minPrice);
 
             return query
-                .Include(p => p.Category)
+               .Include(p => p.Category)
                 .Include(p => p.Size)
                 .Include(p => p.Color)
                 .ToList();
