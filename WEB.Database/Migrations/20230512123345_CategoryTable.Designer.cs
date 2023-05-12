@@ -12,8 +12,8 @@ using WEB.Database;
 namespace WEB.Database.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230510082219_IFormFile")]
-    partial class IFormFile
+    [Migration("20230512123345_CategoryTable")]
+    partial class CategoryTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -65,5 +65,11 @@ namespace WEB.Dal.Services
                 dbContext.SaveChanges();
             }
         }
+        public void Delete(int id)
+        {
+            var cat = GetProductById(id);
+            dbContext.Entry(cat).State = EntityState.Deleted;
+            dbContext.SaveChanges();
+        }
     }
 }

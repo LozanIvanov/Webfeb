@@ -118,6 +118,14 @@ namespace Webfeb.Controllers.Admin
 
             return Redirect("/Admin/Products");
         }
+        [HttpGet]
+        [Route("/Admin/Products/Delete/{id}")]
+        public IActionResult Delete(int id)
+        {
+            productService.Delete(id);
+            return Redirect("/Admin/Products");
+        }
+
 
         private async Task<string> UploadFile(IFormFile file)
         {

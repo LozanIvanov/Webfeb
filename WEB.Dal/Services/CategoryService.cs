@@ -21,11 +21,25 @@ namespace WEB.Dal.Services
         {
             return dbContext.Categories.Where(c => c.Id == id).FirstOrDefault();
         }
-        public void Update(Category category)
-        {
-            dbContext.Entry(category).State = EntityState.Modified;
-            dbContext.SaveChanges();
-        }
+        public void Update(int id,Category category)
+        { 
+        var currentCategory = this.dbContext.Categories.Where(p => p.Id == id).FirstOrDefault();
+
+            if (currentCategory != null)
+            {
+                currentCategory.Name = category.Name;
+
+                currentCategory.ParentId = category.ParentId;
+
+
+                if (!string.IsNullOrEmpty(category.MainImage))
+                {
+                    currentCategory.MainImage = category.MainImage;
+                }
+            }
+                dbContext.Entry(currentCategory).State = EntityState.Modified;
+                dbContext.SaveChanges();
+            }
         public void Delete(int id)
         {
             Category cat = GetCategoryById(id);

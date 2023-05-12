@@ -4,7 +4,7 @@
 
 namespace WEB.Database.Migrations
 {
-    public partial class IFormFile : Migration
+    public partial class CategoryTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,7 +12,11 @@ namespace WEB.Database.Migrations
                 name: "MainImage",
                 table: "Categories",
                 type: "nvarchar(max)",
-                nullable: true);
+                nullable: true,
+                defaultValue: null );
+        
+
+
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

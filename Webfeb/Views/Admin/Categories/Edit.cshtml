@@ -4,7 +4,7 @@
     Layout = "~/Views/ShareAdmin/_AdminLayout.cshtml";
 }
 
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
     <div class="row">
         <div class="col-sm-4">
             <div>
@@ -13,6 +13,10 @@
                        name="Name"
                        class="form-control"
                        value="@Model.SelectedCategory.Name" />
+            </div>
+            
+            <div>
+                Image:  <input type="file" accept="image/*" name="MainImage" class="form-control" />
             </div>
             <div>
                 Parent:

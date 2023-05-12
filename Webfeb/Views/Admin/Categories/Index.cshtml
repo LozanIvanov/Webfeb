@@ -16,6 +16,9 @@
                     Name
                 </td>
                 <td>
+                    Image
+                </td>
+                <td>
                     Parent
                 </td>
                 <td>
@@ -30,6 +33,12 @@
                     </td>
                     <td>
                         @category.Name
+                    </td>
+                     <td>
+                         @if (category.MainImage != null)
+                            {
+                                <img class="table-image" src="/img/products/@category.MainImage" />
+                            }
                     </td>
                     <td>
                         @(category.Parent != null  ? category.Parent.Name : "Main")

@@ -31,9 +31,23 @@ namespace Webfeb.Controllers.Admin
         }
         [HttpPost]
         [Route("/Admin/Categories/Create")]
-        public IActionResult Create(Category category)
+        public async Task<IActionResult> Create(CategoryViewModel category)
         {
-            service.Store(category);
+            string filePath = "no-image.png";
+            if (category.MainImage != null)
+            {
+                filePath = await UploadFile(category.MainImage);
+            }
+
+            Category categorynew = new Category
+            {
+                Name = category.Name,
+               
+                MainImage = filePath,
+                ParentId = category.ParentId,
+              
+            };
+            service.Store(categorynew);
             return Redirect("/Admin/Categories");
         }
         [HttpGet]
@@ -47,9 +61,23 @@ namespace Webfeb.Controllers.Admin
         }
         [HttpPost]
         [Route("/Admin/Categories/Edit/{id}")]
-        public IActionResult Edit(int id,Category category)
+        public async Task<IActionResult> Edit(int id,CategoryViewModel category)
         {
-            service.Update(category);
+            string filePath = "no-image.png";
+            if (category.MainImage != null)
+            {
+                filePath = await UploadFile(category.MainImage);
+            }
+
+            Category categorynew = new Category
+            {
+                Name = category.Name,
+
+                MainImage = filePath,
+                ParentId = category.ParentId,
+
+            };
+            service.Update(id,categorynew);
             return Redirect("/Admin/Categories");
         }
         [HttpGet]
@@ -60,6 +88,20 @@ namespace Webfeb.Controllers.Admin
             return Redirect("/Admin/Categories");
         }
 
+        private async Task<string> UploadFile(IFormFile file)
+        {
+            var uniqueFileName = Guid.NewGuid() + "-" + file.FileName;
+            var filePath = Path.Combine("wwwroot", "img", "products", uniqueFileName);
+
+            using (var stream = System.IO.File.Create(filePath))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            return uniqueFileName;
+        }
 
     }
+    
+
 }
