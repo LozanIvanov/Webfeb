@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using Webfeb.Models;
 using WEB.Database;
+using Webfeb.Models.Admin;
 
 namespace Webfeb.Controllers
 {
@@ -17,9 +18,31 @@ namespace Webfeb.Controllers
             _logger = logger;
         }
 
+
         public IActionResult Index()
         {
-            return View();
+            var model = new CategoryEditViewModel();
+          
+
+            model.CategoriesView = _context.Categories.Select(c=>new CategoryViewModel() 
+                                      
+                                      {
+                                     Name=c.Name,
+                                      ProductCount=c.Products.Count,      
+                                    
+                                     MainImages=c.MainImage
+                                    
+                                      }).ToList();
+            model.TrandyProduct = _context.Products.Select(c => new ProductCreateModel()
+            {
+                Id=c.Id,
+                Name = c.Name,
+                Price=c.Price,
+                MainImages=c.MainImage
+
+            }).ToList();
+            model.TrandyProduct = model.TrandyProduct.OrderByDescending(x => x.Id).Take(3).ToList();
+            return View(model);
         }
 
         public IActionResult Privacy()

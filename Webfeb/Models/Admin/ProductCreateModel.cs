@@ -13,6 +13,7 @@ namespace Webfeb.Models.Admin
         [Column(TypeName = "decimal(15,2)")]
         public decimal Price { get; set; }
         public IFormFile? MainImage { get; set; }
+        public string? MainImages { get; set; }
         public string? GalleryImage { get; set; }
         public int CategoryId { get; set; }
         public int ColorId { get; set; }

@@ -11,6 +11,8 @@ namespace Webfeb.Models.Admin
         [ForeignKey("Parent")]
         public int? ParentId { get; set; }
         public IFormFile? MainImage { get; set; }
+        public string MainImages { get; set; }
+        public int ProductCount { get; set; }
 
         public ICollection<Product> Products { get; set; }
         public CategoryViewModel()

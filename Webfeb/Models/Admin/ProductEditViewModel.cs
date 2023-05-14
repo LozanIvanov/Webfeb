@@ -8,5 +8,6 @@ namespace Webfeb.Models.Admin
         public List<Category> Categories { get; set; }
         public List<Color> Colors { get; set; }
         public List<Size> Sizes { get; set; }
+        public List<ProductCreateModel> Products { get; set; }
     }
 }
