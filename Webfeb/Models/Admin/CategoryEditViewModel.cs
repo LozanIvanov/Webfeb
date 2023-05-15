@@ -9,5 +9,8 @@ namespace Webfeb.Models.Admin
         public Category CategoryViewModel { get; set; }
         public List<CategoryViewModel> CategoriesView { get; set; }
         public List<ProductCreateModel> TrandyProduct { get; set; }
+        public List<ProductCreateModel> RendomProduct { get; set; }
+
+
     }
 }

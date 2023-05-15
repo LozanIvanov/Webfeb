@@ -41,7 +41,32 @@ namespace Webfeb.Controllers
                 MainImages=c.MainImage
 
             }).ToList();
-            model.TrandyProduct = model.TrandyProduct.OrderByDescending(x => x.Id).Take(3).ToList();
+            model.TrandyProduct = model.TrandyProduct.OrderByDescending(x => x.Id).Take(8).ToList();
+
+            Random random = new Random();
+
+           
+            
+           var products = _context.Products.Select(c => new ProductCreateModel()
+           {
+               Id = c.Id,
+               Name = c.Name,
+               Price = c.Price,
+               MainImages = c.MainImage
+
+             }).ToList();
+            List<ProductCreateModel> p = new List<ProductCreateModel>();
+            for (int i = 0; i < 4; i++)
+            {
+                int randomIndex = random.Next(products.Count);
+                var product = products[randomIndex];
+                p.Add(product);
+                products.RemoveAt(randomIndex);
+            }
+            model.RendomProduct= p;
+
+
+
             return View(model);
         }
 
