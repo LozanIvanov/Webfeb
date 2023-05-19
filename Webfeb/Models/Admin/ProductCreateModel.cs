@@ -18,5 +18,6 @@ namespace Webfeb.Models.Admin
         public int CategoryId { get; set; }
         public int ColorId { get; set; }
         public int SizeId { get; set; }
+         public decimal Total { get; set; }
     }
 }

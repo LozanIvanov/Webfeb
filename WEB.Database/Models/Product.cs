@@ -18,5 +18,7 @@ namespace WEB.Database.Models
         public Size Size { get; set; }
         public int ColorId { get; set; }
         public Color Color { get; set; }
+        
+       
     }
 }

@@ -23,6 +23,8 @@ namespace WEB.Database
         public DbSet<Publication> Publications { get; set; }
         public DbSet<Color> Colors { get; set; }
         public DbSet<Size> Sizes { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }  
+       
         public ApplicationDbContext(DbContextOptions options)
             :base(options)
         {
@@ -41,6 +43,8 @@ namespace WEB.Database
                 .HasOne(c => c.City)
                 .WithMany()
                 .OnDelete(DeleteBehavior.NoAction);
+
+       
         }
     }
 }

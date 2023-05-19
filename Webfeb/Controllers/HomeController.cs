@@ -44,9 +44,7 @@ namespace Webfeb.Controllers
             model.TrandyProduct = model.TrandyProduct.OrderByDescending(x => x.Id).Take(8).ToList();
 
             Random random = new Random();
-
-           
-            
+  
            var products = _context.Products.Select(c => new ProductCreateModel()
            {
                Id = c.Id,
