@@ -15,21 +15,22 @@ namespace WEB.Dal.Services
 
         public List<CartItem> GetProducts()
         {
+            
+
             return this.dbContext.CartItems.ToList();
 
         }
-
         public CartItem GetProductById(int id)
         {
             return this.dbContext.CartItems.Where(p => p.Id == id)
                 .FirstOrDefault();
         }
-
         public void AddProduct(CartItem product)
         {
 
-            this.dbContext.CartItems.Add(product);
-            this.dbContext.SaveChanges();
+            dbContext.CartItems.Add(product);
+            dbContext.SaveChanges();
+          
         }
 
        

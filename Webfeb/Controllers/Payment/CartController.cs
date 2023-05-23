@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using WEB.Dal.Services;
 using WEB.Database;
 using WEB.Database.Models;
@@ -26,47 +27,76 @@ namespace Webfeb.Controllers.Payment
         [HttpGet]
         [Route("/Payment/Cart")]
 
-        public IActionResult Index()
-        {/*
-            CategoryEditViewModel category = new CategoryEditViewModel();
-            category.TrandyProduct = productService.GetProducts().Select(c=>new ProductCreateModel()
+        public async Task< IActionResult> Index()
+        {
+            List<Product> w = new List<Product>();
+          List<Product> pro = _context.CartItems.Select(x => new Product
             {
-                Name = c.Name,
-                Quantity = c.Quantity,
-                Price = c.Price,
-                Total=c.Price,
-                MainImages = c.MainImage
+                Id=x.ProductId
             }).ToList();
-            return View(category.TrandyProduct);*/
-            return View("~/Views/Home/Index.cshtml");
+            foreach (var pr in pro)
+            {
+                Product product = _context.Products.Where(x => x.Id == pr.Id).FirstOrDefault() ;
+                w.Add(product);
+            }
+            var model = new ProductEditViewModel();
+            model.Products = new List<ProductCreateModel>();
+            
+            foreach (var item in w)
+            {
+               
+                ProductCreateModel t = new ProductCreateModel()
+                {
+                    Name = item.Name,
+                    MainImages = item.MainImage,
+                    Price = item.Price,
+                    Total = item.Price
+                };
+                model.Products.Add(t);
+                
+            }
+
+            return View("~/Views/Payment/Cart.cshtml", model);
         }
       
         [HttpGet]
         [Route("/Payment/Cart/Add")]
+
         public IActionResult Add(int id)
         {
-            string h = id.ToString();
-            Product product = productService.GetProductById(id);
-           
-
-            if (product != null)
+            // Check if the user is authenticated first
+            if (User.Identity.IsAuthenticated)
             {
-                // Create a new CartItem and set its properties
-                CartItem cartItem = new CartItem
+                // Retrieve the User ID
+                string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                Product product = productService.GetProductById(id);
+
+                if (product != null)
                 {
-                    ProductId = product.Id,
-                    Product = product,
-                    Quantity = 1 // Set the desired quantity
-                };
+                    CartItem cartItem = new CartItem()
+                    {
+                        ProductId = product.Id,
+                        Quantity = 1,
+                        UserId = userId
 
-                // Add the cartItem to the shopping cart
-                cartService.AddProduct(cartItem);
+                    };
+                    cartService.AddProduct(cartItem);
+                }
+
+                else
+                {
+                    return Unauthorized();
+                }
+                // ... rest of your action logic here
+
+
             }
-   
-      
 
 
-            return View("~/Views/Payment/Cart.cshtml");
+           return Redirect("/Home");
+
+
+            // return View("~/Views/Home/Index.cshtml");
         }
 
        
@@ -75,7 +105,7 @@ namespace Webfeb.Controllers.Payment
         public IActionResult Delete(int id)
         {
             productService.Delete(id);
-            return Redirect("Payment/Cart/Add");
+            return Redirect("/Home");
         }
 
 
