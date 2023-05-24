@@ -101,7 +101,7 @@ namespace Webfeb.Controllers.Payment
 
        
         [HttpGet]
-        [Route("/Admin/Products/Delete/{id}")]
+        [Route("/Payment/Delete/{id}")]
         public IActionResult Delete(int id)
         {
             productService.Delete(id);

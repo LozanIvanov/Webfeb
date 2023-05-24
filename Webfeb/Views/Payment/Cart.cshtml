@@ -1,5 +1,41 @@
 ﻿
 @model Webfeb.Models.Admin.ProductEditViewModel
+<script>
+	function filterByQuantity() {
+
+        let minusButton=document.getElementsByClassName('btn btn-sm btn-primary btn-minus');
+        let plusButton=document.getElementsByClassName('btn btn-sm btn-primary btn-plus');
+        let totalButton=Number(document.getElementById("Total"));
+        let priceItem=Number(document.getElementById("Price"));
+
+        minusButton.addEventListener('click', btnClickMinus);
+        plusButton.addEventListener('click', btnClickPlus);
+
+         function btnClickMinus(ev) {
+             
+             let res=totalButton-priceItem;
+                 totalButton=res
+             
+
+         }
+         function btnClickPlus() {
+             let res=totalButton.innerHTML +priceItem.innerHTML;
+                 totalButton.innerHTML=res;
+                 
+             
+
+         }
+         //delete
+         const rows = Array.from(document.querySelectorAll('tbody tr'));
+          rows
+        
+        .forEach(row => {
+            row.removeChild(row);
+         
+        });
+
+	}
+</script>
     
     <!-- Page Header Start -->
     <div class="container-fluid bg-secondary mb-5">
@@ -33,25 +69,25 @@
                         @foreach (var product in Model.Products)
                         {
                             <tr>
-                                <td class="align-middle"><img src="/img/products/@product.MainImages" alt="" style="width: 50px;">@product.Name </td>
-                            <td class="align-middle">$@product.Price</td>
-                            <td class="align-middle">
+                                <td class="align-middle"><img src="/img/products/@product.MainImages" value="@product.Name" alt="" style="width: 50px;">@product.Name </td>
+                            <td class="align-middle" id="Price" value= "@product.Price">$@product.Price</td>
+                            <td class="align-middle" value="@product.Quantity">
                                 <div class="input-group quantity mx-auto" style="width: 100px;">
                                     <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-primary btn-minus" >
+                                        <button class="btn btn-sm btn-primary btn-minus" onclick="filterByQuantity()" >
                                         <i class="fa fa-minus"></i>
                                         </button>
                                     </div>
                                     <input type="text" class="form-control form-control-sm bg-secondary text-center" value="1">
                                     <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-primary btn-plus">
+                                        <button class="btn btn-sm btn-primary btn-plus" onclick="filterByQuantity()">
                                             <i class="fa fa-plus"></i>
                                         </button>
                                     </div>
                                 </div>
                             </td>
-                            <td class="align-middle">$@product.Total</td>
-                            <td class="align-middle"><button href="/Payment/Cart/Delete/@product.Id" class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button></td>
+                            <td class="align-middle" id="Total" >$@product.Total</td>
+                            <td class="align-middle"><button href="/Payment/Cart/Delete/@product.Id"  onclick="/Payment/Cart/Delete/@product.Id" class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button></td>
                             </tr>
                         }
                        
