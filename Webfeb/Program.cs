@@ -34,6 +34,8 @@ builder.Services.AddScoped<CategoryService>();
 builder.Services.AddScoped<SizeService>();
 builder.Services.AddScoped<ColorService>();
 builder.Services.AddScoped<CartService>();
+builder.Services.AddScoped<CheckoutService>();
+builder.Services.AddScoped<CountryService>();
 
 var app = builder.Build();
 

@@ -24,6 +24,7 @@ namespace WEB.Database
         public DbSet<Color> Colors { get; set; }
         public DbSet<Size> Sizes { get; set; }
         public DbSet<CartItem> CartItems { get; set; }  
+        public DbSet<Checkout> Checkouts { get; set; }
        
         public ApplicationDbContext(DbContextOptions options)
             :base(options)

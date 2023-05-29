@@ -29,7 +29,7 @@ namespace Webfeb.Controllers.Payment
 
         public async Task< IActionResult> Index()
         {
-            List<Product> w = new List<Product>();
+           List<Product> w = new List<Product>();
           List<Product> pro = _context.CartItems.Select(x => new Product
             {
                 Id=x.ProductId
@@ -47,6 +47,7 @@ namespace Webfeb.Controllers.Payment
                
                 ProductCreateModel t = new ProductCreateModel()
                 {
+                    Id=item.Id,
                     Name = item.Name,
                     MainImages = item.MainImage,
                     Price = item.Price,
@@ -101,10 +102,10 @@ namespace Webfeb.Controllers.Payment
 
        
         [HttpGet]
-        [Route("/Payment/Delete/{id}")]
+        [Route("/Payment/Cart/Delete/{id}")]
         public IActionResult Delete(int id)
         {
-            productService.Delete(id);
+            cartService.Delete(id);
             return Redirect("/Home");
         }
 

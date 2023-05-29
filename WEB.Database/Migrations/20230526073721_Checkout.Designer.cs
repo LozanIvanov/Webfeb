@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WEB.Database;
 
@@ -11,9 +12,10 @@ using WEB.Database;
 namespace WEB.Database.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230526073721_Checkout")]
+    partial class Checkout
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -294,7 +296,7 @@ namespace WEB.Database.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CartItemId")
+                    b.Property<int>("CartItemId")
                         .HasColumnType("int");
 
                     b.Property<string>("City")
@@ -676,7 +678,9 @@ namespace WEB.Database.Migrations
                 {
                     b.HasOne("WEB.Database.Models.CartItem", "CartItem")
                         .WithMany()
-                        .HasForeignKey("CartItemId");
+                        .HasForeignKey("CartItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("WEB.Database.Models.Country", "Country")
                         .WithMany()

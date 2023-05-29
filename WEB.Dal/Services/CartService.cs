@@ -22,7 +22,7 @@ namespace WEB.Dal.Services
         }
         public CartItem GetProductById(int id)
         {
-            return this.dbContext.CartItems.Where(p => p.Id == id)
+            return this.dbContext.CartItems.Where(p => p.ProductId == id)
                 .FirstOrDefault();
         }
         public void AddProduct(CartItem product)
@@ -37,9 +37,11 @@ namespace WEB.Dal.Services
         
         public void Delete(int id)
         {
-            var cat = GetProductById(id);
+            var cat = this.dbContext.CartItems.Where(p => p.ProductId == id)
+                .FirstOrDefault();
             dbContext.Entry(cat).State = EntityState.Deleted;
             dbContext.SaveChanges();
         }
     }
 }
+

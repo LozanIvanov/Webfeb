@@ -3,36 +3,40 @@
 <script>
 	function filterByQuantity() {
 
-        let minusButton=document.getElementsByClassName('btn btn-sm btn-primary btn-minus');
-        let plusButton=document.getElementsByClassName('btn btn-sm btn-primary btn-plus');
-        let totalButton=Number(document.getElementById("Total"));
-        let priceItem=Number(document.getElementById("Price"));
+        let minusButton=document.querySelector('.btn.btn-sm.btn-primary.btn-minus');
+        let plusButton=document.querySelectorAll('.btn.btn-sm.btn-primary.btn-plus');
+        let totalButton=document.getElementById("Total").textContent;
+       
+        let priceItem=document.getElementById("Price").textContent;
 
-        minusButton.addEventListener('click', btnClickMinus);
-        plusButton.addEventListener('click', btnClickPlus);
+        Array.from(plusButton).forEach(b => {
+             b.addEventListener ("click", function() {
+                let res=totalButton+priceItem;
 
-         function btnClickMinus(ev) {
-             
-             let res=totalButton-priceItem;
                  totalButton=res
-             
+             })
+        };
+      //  minusButton.addEventListener('click', btnClickMinus);
+       // plusButton.addEventListener('click', btnClickPlus);
 
-         }
-         function btnClickPlus() {
-             let res=totalButton.innerHTML +priceItem.innerHTML;
-                 totalButton.innerHTML=res;
+         //function btnClickMinus(ev) {
+             
+         //    let res=totalButton-priceItem;
+         //        totalButton=res
+         //}
+         //function btnClickPlus() {
+         //    let res=totalButton +priceItem.innerHTML;
+         //        totalButton.innerHTML=res;
                  
-             
-
-         }
+         //}
          //delete
-         const rows = Array.from(document.querySelectorAll('tbody tr'));
-          rows
+        // const rows = Array.from(document.querySelectorAll('tbody tr'));
+        //  rows
         
-        .forEach(row => {
-            row.removeChild(row);
+        //.forEach(row => {
+        //    row.removeChild(row);
          
-        });
+    
 
 	}
 </script>
@@ -70,7 +74,7 @@
                         {
                             <tr>
                                 <td class="align-middle"><img src="/img/products/@product.MainImages" value="@product.Name" alt="" style="width: 50px;">@product.Name </td>
-                            <td class="align-middle" id="Price" value= "@product.Price">$@product.Price</td>
+                            <td class="align-middle" Id="Price" value= "@product.Price">$@product.Price</td>
                             <td class="align-middle" value="@product.Quantity">
                                 <div class="input-group quantity mx-auto" style="width: 100px;">
                                     <div class="input-group-btn">
@@ -80,17 +84,21 @@
                                     </div>
                                     <input type="text" class="form-control form-control-sm bg-secondary text-center" value="1">
                                     <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-primary btn-plus" onclick="filterByQuantity()">
+                                        <button class="btn btn-sm btn-primary btn-plus"onclick="filterByQuantity()" >
                                             <i class="fa fa-plus"></i>
                                         </button>
                                     </div>
                                 </div>
                             </td>
-                            <td class="align-middle" id="Total" >$@product.Total</td>
-                            <td class="align-middle"><button href="/Payment/Cart/Delete/@product.Id"  onclick="/Payment/Cart/Delete/@product.Id" class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button></td>
+                            <td class="align-middle" Id="Total" >$@product.Total</td>
+                            <td class="align-middle">
+                               
+                                <button onclick="location.href='https://localhost:7079/Payment/Cart/Delete/@product.Id'" type="button"   class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button>
+                               
+                                </td>
                             </tr>
                         }
-                       
+                          
                        
                     </tbody>
                 </table>
@@ -111,7 +119,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-3 pt-1">
                             <h6 class="font-weight-medium">Subtotal</h6>
-                            <h6 class="font-weight-medium">$150</h6>
+                            <h6 class="font-weight-medium" id ="SubTotal">$@Model.Products.Sum(x=>x.Price)</h6>
                         </div>
                         <div class="d-flex justify-content-between">
                             <h6 class="font-weight-medium">Shipping</h6>
@@ -121,9 +129,9 @@
                     <div class="card-footer border-secondary bg-transparent">
                         <div class="d-flex justify-content-between mt-2">
                             <h5 class="font-weight-bold">Total</h5>
-                            <h5 class="font-weight-bold">$160</h5>
+                            <h5 class="font-weight-bold"id="TotalPrice">$@Model.Products.Sum(x=>x.Price)</h5>
                         </div>
-                        <button class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</button>
+                        <button  onclick="location.href='https://localhost:7079/Payment/Checkout'" type="button" class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</button>
                     </div>
                 </div>
             </div>
